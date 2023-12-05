@@ -1,0 +1,9 @@
+[web_servers]
+192.168.152.130 # Ubuntu1
+192.168.152.133 # CentOS
+
+[db_servers]
+192.168.152.131 # Ubuntu2
+
+[file_servers]
+192.168.152.132 # Ubuntu3

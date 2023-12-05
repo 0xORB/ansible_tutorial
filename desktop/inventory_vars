@@ -1,0 +1,6 @@
+# Ubuntu Hosts
+192.168.152.130 ansible_user=orb apache_package=apache2 php_package=libapache2-mod-php
+192.168.152.131 ansible_user=orb apache_package=apache2 php_package=libapache2-mod-php
+192.168.152.132 ansible_user=orb apache_package=apache2 php_package=libapache2-mod-php
+# CENTOS Host(s)
+192.168.152.133 apache_package=httpd php_package=php
