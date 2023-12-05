@@ -1,0 +1,35 @@
+# Ping hosts listed in inventory (connects via SSH, not IP-Utils Ping)
+ansible all --key-file ~/.ssh/ansible/id_ansible -i inventory -m ping
+
+# After adding an ansible.cfg (shortened version of ping hosts)
+ansible all -m ping
+
+---
+
+# List hosts
+ansible all --list-hosts
+
+# Grab information on hosts
+ansible all -m gather_facts
+ansible all -m gather_facts --limit 192.168.152.130
+
+---
+
+# Update host packages (--become --ask-become-pass elevates the privileges to update apt)
+ansible all -m apt -a update_cache=true --become --ask-become-pass
+
+# Upgrade host packages (OS family must be 'Debian')
+ansible all -m apt -a "upgrade=dist" --become --ask-become-pass
+
+# Install package
+ansible all -m apt -a name=vim-nox --become --ask-become-pass
+
+---
+
+# Run playbook
+ansible-playbook --ask-become-pass install_apache.yml
+
+# List tags from playbook
+ansible-playbook --list-tags site.yml
+ansible-playbook --tags centos --ask-become-pass site.yml       # Target single tag
+ansible-playbook --tags "apache,db" --ask-become-pass site.yml  # Target multiple tags
