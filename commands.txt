@@ -1,3 +1,9 @@
+# Copy over SSH keys
+ssh-copy-id -i [PATH_TO_PUBLIC_KEY] user@host
+
+# Allowing connection to apache server via remote host (CentOS 9)
+firewall-cmd --add-service=http
+
 # Ping hosts listed in inventory (connects via SSH, not IP-Utils Ping)
 ansible all --key-file ~/.ssh/ansible/id_ansible -i inventory -m ping
 
