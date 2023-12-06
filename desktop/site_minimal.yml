@@ -1,0 +1,55 @@
+---
+# ----------------------
+# All Server Tasks
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: update repository cache (CentOS)
+    tags: always
+    dnf:
+      update_cache: yes
+    changed_when: false # consider this play as no change
+    when: ansible_distribution == "CentOS"
+
+  - name: update repository cache (Ubuntu)
+    tags: always
+    apt:
+      update_cache: yes
+    changed_when: false # consider this play as no change
+    when: ansible_distribution == "Ubuntu"
+
+# ----------------------
+# All
+- hosts: all
+  become: true
+  roles:
+    - base
+
+# ----------------------
+# Workstations
+- hosts: workstations
+  become: true
+  roles:
+    - workstations
+
+# ----------------------
+# Web Server Tasks
+- hosts: web_servers
+  become: true
+  roles:
+    - web_servers
+
+# ----------------------
+# DB Server Tasks
+- hosts: db_servers
+  become: true
+  roles:
+    - db_servers
+
+# ----------------------
+# File Server Tasks
+- hosts: file_servers
+  become: true
+  roles:
+    - file_servers

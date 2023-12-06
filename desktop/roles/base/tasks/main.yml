@@ -1,0 +1,5 @@
+# Add SSH key for user (place holder to remove or add new key)
+- name: add ssh key for bob
+  authorized_key:
+    user: bob
+    key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFXjYET7vPiJpFeVsyNZPhHtiv7Q6hVu2Bh/dTSgURQ ansible"
