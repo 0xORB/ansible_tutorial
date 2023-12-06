@@ -1,47 +1,28 @@
-- name: install apache and php for Ubuntu servers
-  tags: apache,apache2,ubuntu
-  apt:
+- name: install apache and php packages
+  tags: apache,apache2,centos,httpd,ubuntu
+  package:
     name:
-      - apache2
-      - libapache2-mod-php
+      - "{{ apache_package_name }}"
+      - "{{ php_package_name }}"
     state: latest
-  when: ansible_distribution == "Ubuntu"
-
-- name: install apache and php for CentOS servers
-  tags: apache,httpd,centos
-  dnf:
-    name:
-      - httpd
-      - php
-    state: latest
-  when: ansible_distribution == "CentOS"
 
 # Start a service and set it to enabled (which allows it to start on system restart)
-- name: start httpd (CentOS)
-  tags: apache,httpd,centos
+- name: start and enable apache service
+  tags: apache,httpd
   service:
-    name: httpd
+    name: "{{ apache_service }}"
     state: started
     enabled: yes
-  when: ansible_distribution == "CentOS"
 
 # Changing a line within a file
-- name: change e-mail address for admin
+- name: change e-mail address for admin (CentOS)
   tags: apache,httpd,centos
   lineinfile:
     path: /etc/httpd/conf/httpd.conf
     regexp: '^ServerAdmin'
     line: ServerAdmin test@test.com
   when: ansible_distribution == "CentOS"
-  register: httpd_centos
-
-# Restarting a service
-- name: restart httpd (CentOS)
-  tags: apache,httpd,centos
-  service:
-    name: httpd
-    state: restarted
-  when: httpd_centos.changed
+  notify: restart_apache
 
 # Copy a local file to a remote location
 - name: copy default html file for site

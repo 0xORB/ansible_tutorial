@@ -1,0 +1,4 @@
+naming for these files can consist of the following:
+- IPv4 Address
+- Hostname
+- DNS Name
