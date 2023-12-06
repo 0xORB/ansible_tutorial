@@ -1,0 +1,48 @@
+---
+# ----------------------
+# All Server Tasks
+- hosts: all
+  become: true
+  pre_tasks:
+
+  - name: install updates (CentOS)
+    tags: always
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
+  - name: install updates (Ubuntu)
+    tags: always
+    apt:
+      upgrade: dist
+      update_cache: yes
+    when: ansible_distribution == "Ubuntu"
+
+- hosts: all
+  become: true
+  tasks:
+
+# Add a user
+  - name: create bob user
+    tags: always
+    user:
+      name: bob
+      groups: root
+
+# Add SSH key for user
+  - name: add ssh key for bob
+    tags: always
+    authorized_key:
+      user: bob
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFXjYET7vPiJpFeVsyNZPhHtiv7Q6hVu2Bh/dTSgURQ ansible"
+
+# Add sudoers file for user
+  - name: add sudoers file for bob
+    tags: always
+    copy:
+      src: data/sudoer_bob
+      dest: /etc/sudoers.d/bob
+      owner: root
+      group: root
+      mode: 0440

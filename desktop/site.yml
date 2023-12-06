@@ -5,19 +5,32 @@
   become: true
   pre_tasks:
 
-  - name: install updates (CentOS)
+  - name: update repository cache (CentOS)
     tags: always
     dnf:
-      update_only: yes
+      # update_only: yes
       update_cache: yes
+    changed_when: false # consider this play as no change
     when: ansible_distribution == "CentOS"
 
-  - name: install updates (Ubuntu)
+  - name: update repository cache (Ubuntu)
     tags: always
     apt:
-      upgrade: dist
+      # upgrade: dist
       update_cache: yes
+    changed_when: false # consider this play as no change
     when: ansible_distribution == "Ubuntu"
+
+- hosts: all
+  become: true
+  tasks:
+
+# Add SSH key for user (place holder to remove or add new key)
+  - name: add ssh key for bob
+    tags: always
+    authorized_key:
+      user: bob
+      key: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGFXjYET7vPiJpFeVsyNZPhHtiv7Q6hVu2Bh/dTSgURQ ansible"
 
 # ----------------------
 # Workstations
