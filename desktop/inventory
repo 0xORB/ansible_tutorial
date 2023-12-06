@@ -7,3 +7,6 @@
 
 [file_servers]
 192.168.152.132 # Ubuntu3
+
+[workstations]
+192.168.152.134 # Ubuntu4 (Workstation)
