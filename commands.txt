@@ -1,3 +1,12 @@
+# Remove IP from known hosts if host id changed
+ssh-keygen -f "/home/orb/.ssh/known_hosts" -R "192.168.152.130"
+
+# Transfer file via SCP
+scp orb@192.168.152.133:/etc/ssh/sshd_config sshd_config_centos.j2
+# - Change permissions of file on remote host via : sudo chmod a+r /etc/ssh/sshd_config
+# - Undo change to the sshd_config file via       : sudo chmod o-r /etc/ssh/sshd_config
+# - Undo change to the sshd_config file via       : sudo chmod 644 /etc/ssh/sshd_config
+
 # Copy over SSH keys
 ssh-copy-id -i [PATH_TO_PUBLIC_KEY] user@host
 
